@@ -25,7 +25,8 @@
     "skipLibCheck": true,
     "baseUrl": "src",
     "paths": {
-      "@entity/*": ["entity/*"]
+      "@entity/*": ["entity/*"],
+      "@middleware/*": ["middleware/*"]
     }
   },
   "exclude": ["node_modules"],
