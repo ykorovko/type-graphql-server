@@ -4,8 +4,7 @@ import {
   registerDecorator,
   ValidationOptions
 } from "class-validator";
-
-import { User } from "../../../entity/Users";
+import User from "@entity/Users";
 
 @ValidatorConstraint({ async: true })
 export class isEmailAlreadyExistConstraint
