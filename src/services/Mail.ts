@@ -3,7 +3,8 @@ import {
   createTransport,
   TestAccount,
   Transporter,
-  SendMailOptions
+  SendMailOptions,
+  getTestMessageUrl
 } from "nodemailer";
 import SMTPConnection from "nodemailer/lib/smtp-connection";
 
@@ -52,6 +53,9 @@ class Mail implements MailService {
       if (error) return console.log(`error: ${error}`);
 
       console.log(`Message Sent ${info.response}`);
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", getTestMessageUrl(info));
     });
   }
 }

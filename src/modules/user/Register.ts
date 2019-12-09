@@ -1,12 +1,14 @@
 import bcrypt from "bcryptjs";
 import { Resolver, Query, Mutation, Arg, UseMiddleware } from "type-graphql";
+import { v4 } from "uuid";
 
 import User from "@entity/Users";
 import isAuth from "@middleware/isAuth";
 import Mail from "@services/Mail";
 
-import { createConfirmationUrl } from "utils/functions";
-import { RegisterInput } from "./register/RegisterInput";
+import RegisterInput from "./register/RegisterInput";
+import redis from "redis";
+import { confirmUserPrefix } from "constants/redisPrefixes";
 
 @Resolver()
 class RegisterResolver {
@@ -30,7 +32,11 @@ class RegisterResolver {
       password: hashedPassword
     }).save();
 
-    const url = await createConfirmationUrl(user.id);
+    const token = v4();
+
+    await redis.set(confirmUserPrefix + token, user.id, "ex", 60 * 60 * 24); // 1 day expiration
+
+    const url = `http://localhost:3000/user/confirm/${token}`;
 
     Mail.sendMail({
       to: email,
@@ -40,9 +46,9 @@ class RegisterResolver {
           <p>
             For added security, please verify your email address to confirm that this account belongs to you by clicking
           </p>
-            <a href="${url}">${url}</a>
-          </div>
-        `
+          <a href="${url}">${url}</a>
+        </div>
+      `
     });
 
     return user;
