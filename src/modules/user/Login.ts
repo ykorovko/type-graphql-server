@@ -20,6 +20,8 @@ class LoginResolver {
 
     if (!valid) return null;
 
+    if (!user.confirmed) return null;
+
     ctx.req.session!.userId = user.id;
 
     return user;
