@@ -2,13 +2,13 @@ import bcrypt from "bcryptjs";
 import { Resolver, Query, Mutation, Arg, UseMiddleware } from "type-graphql";
 import { v4 } from "uuid";
 
-import User from "@entity/Users";
-import isAuth from "@middleware/isAuth";
-import Mail from "@services/Mail";
+import User from "~/entity/Users";
+import isAuth from "~/middleware/isAuth";
+import Mail from "~/services/Mail";
 
+import redis from "~/redis";
+import { confirmUserPrefix } from "~/constants/redisPrefixes";
 import RegisterInput from "./register/RegisterInput";
-import redis from "redis";
-import { confirmUserPrefix } from "constants/redisPrefixes";
 
 @Resolver()
 class RegisterResolver {
