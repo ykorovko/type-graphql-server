@@ -5,7 +5,9 @@ import {
 } from "typeorm";
 
 const createTestConnection = async (drop: boolean = false) => {
-  const options: ConnectionOptions = await getConnectionOptions("test");
+  const { name, ...options }: ConnectionOptions = await getConnectionOptions(
+    "test"
+  );
 
   return createConnection({
     ...options,

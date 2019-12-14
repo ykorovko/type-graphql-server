@@ -15,9 +15,9 @@ afterAll(async () => {
   await connection.close();
 });
 
-const registerMutation = `
-  mutation Register($data: RegisterInput!) {
-    register(data: $data) {
+const meQuery = `
+  {
+    me {
       id
       firstName
       lastName
@@ -27,37 +27,43 @@ const registerMutation = `
   }
 `;
 
-describe("Register resolver", () => {
-  it.only("Create a user", async () => {
-    const data = {
+describe("Me resolver", () => {
+  it("Get a user", async () => {
+    const user = await User.create({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password()
-    };
+    }).save();
 
     const resp = await gCall({
-      source: registerMutation,
-      variableValues: {
-        data
-      }
+      source: meQuery,
+      userId: user.id
     });
 
     if (resp.errors) console.error(resp.errors[0].originalError);
 
     expect(resp).toMatchObject({
       data: {
-        register: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email
+        me: {
+          id: `${user.id}`,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
         }
       }
     });
+  });
 
-    const user = await User.findOne({ where: { email: data.email } });
+  it("Empty user", async () => {
+    const resp = await gCall({
+      source: meQuery
+    });
 
-    expect(user).toBeDefined();
-    expect(user!.confirmed).toBeFalsy();
+    expect(resp).toMatchObject({
+      data: {
+        me: null
+      }
+    });
   });
 });

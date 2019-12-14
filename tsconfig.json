@@ -26,12 +26,6 @@
     "baseUrl": "src",
     "paths": {
       "~/*": ["*"]
-      // "@entity/*": ["entity/*"],
-      // "@middleware/*": ["middleware/*"],
-      // "@modules/*": ["modules/*"],
-      // "@services/*": ["services/*"],
-      // "@tests/*": ["tests/*"],
-      // "@utils/*": ["utils/*"]
     }
   },
   "exclude": ["node_modules"],
