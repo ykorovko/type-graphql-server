@@ -1,5 +1,6 @@
 import { Resolver, Mutation, Ctx } from "type-graphql";
-import MyContext from "types/MyContext";
+
+import MyContext from "~/types/MyContext";
 
 @Resolver()
 class LogoutResolver {

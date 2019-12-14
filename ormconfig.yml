@@ -8,3 +8,14 @@ default: # default connection
   synchronize: true
   logging: true
   entities: ["src/entity/*.*"]
+
+test: # test connection
+  type: "postgres"
+  host: "localhost"
+  port: 5432
+  username: "type-graphql-user"
+  password: "password"
+  database: "type_graphql_db_test"
+  synchronize: true
+  dropSchema: true
+  entities: ["src/entity/*.*"]
