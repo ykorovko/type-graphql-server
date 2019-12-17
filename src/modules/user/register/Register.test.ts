@@ -28,7 +28,7 @@ const registerMutation = `
 `;
 
 describe("Register resolver", () => {
-  it.only("Create a user", async () => {
+  it("Create a user", async () => {
     const data = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),

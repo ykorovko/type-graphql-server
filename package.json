@@ -43,7 +43,8 @@
   },
   "scripts": {
     "start": "ts-node-dev -r tsconfig-paths/register src/index.ts",
+    "build": "tsc -b",
     "db:setup": "ts-node src/tests/setup.ts",
-    "test": "npm run db:setup && jest --forceExit --detectOpenHandles"
+    "test": "npm run db:setup && jest --forceExit --detectOpenHandles",
   }
 }
