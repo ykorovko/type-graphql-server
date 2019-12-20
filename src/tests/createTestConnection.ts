@@ -5,15 +5,16 @@ import {
 } from "typeorm";
 
 const createTestConnection = async (drop: boolean = false) => {
-  const { name, ...options }: ConnectionOptions = await getConnectionOptions(
-    "test"
-  );
+  // Read connection options from ormconfig file (or ENV variables)
+  const {
+    name,
+    ...connectionOptions
+  }: ConnectionOptions = await getConnectionOptions("test");
 
-  return createConnection({
-    ...options,
-    synchronize: drop,
-    dropSchema: drop
-  });
+  // Overriding options defined in ormconfig
+  Object.assign(connectionOptions, { synchronize: drop, dropSchema: drop });
+
+  return createConnection(connectionOptions);
 };
 
 export default createTestConnection;

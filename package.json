@@ -42,8 +42,10 @@
     "typescript": "^3.3.3333"
   },
   "scripts": {
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "build": "rm -rf dist && tsc -b",
     "start": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "build": "tsc -b",
+    "start:prod": "yarn build && NODE_ENV=production node -r ./tsconfig-paths-bootstrap.js dist/src/index.js",
     "db:setup": "ts-node src/tests/setup.ts",
     "test": "npm run db:setup && jest --forceExit --detectOpenHandles"
   }

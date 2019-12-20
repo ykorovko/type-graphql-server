@@ -1,4 +1,4 @@
-default: # default connection
+development: # development
   type: "postgres"
   host: "localhost"
   port: 5432
@@ -8,8 +8,12 @@ default: # default connection
   synchronize: true
   logging: true
   entities: ["src/entity/*.*"]
+  cli:
+    entitiesDir: "src/entity"
+    migrationsDir: "src/migration"
+    subscribersDir: "src/subscriber"
 
-test: # test connection
+test: # test
   type: "postgres"
   host: "localhost"
   port: 5432
@@ -19,3 +23,14 @@ test: # test connection
   synchronize: true
   dropSchema: true
   entities: ["src/entity/*.*"]
+
+production: # production
+  type: "postgres"
+  host: "localhost"
+  port: 5432
+  username: "type-graphql-user"
+  password: "password"
+  database: "type_graphql_db"
+  synchronize: true
+  logging: true
+  entities: ["dist/src/entity/*.*"]
